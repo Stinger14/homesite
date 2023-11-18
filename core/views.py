@@ -7,9 +7,28 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from subprocess import check_output, Popen
+from time import time
+
 from .models import Room, Topic, Messages
 from .forms import RoomForm
 
+# def openJupyterNotebook(request):
+#     b = check_output("jupyter-lab list".split()).decode('utf-8')
+#     if "9999" not in b:
+#         a = Popen("jupyter-lab --no-browser --port 9999".split())
+#     start_time = time()
+#     unreachable_time = 10
+#     while "9999" not in b:
+#         timer = time()
+#         elapsed_time = timer - start_time
+#         b = check_output("jupyter-lab list".split()).decode('utf-8')
+#         if "9999" in b:
+#             break
+#         if elapsed_time > unreachable_time:
+#             return HttpResponse("Unreachable")
+#     path = b.split('\n')[1].split('::', 1)[0]
+#     return redirect(path)
 
 def loginPage(request):
     page = 'login'
