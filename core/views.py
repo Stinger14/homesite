@@ -1,4 +1,3 @@
-from django.contrib import auth
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
@@ -7,28 +6,10 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from subprocess import check_output, Popen
-from time import time
 
 from .models import Room, Topic, Messages
 from .forms import RoomForm
 
-# def openJupyterNotebook(request):
-#     b = check_output("jupyter-lab list".split()).decode('utf-8')
-#     if "9999" not in b:
-#         a = Popen("jupyter-lab --no-browser --port 9999".split())
-#     start_time = time()
-#     unreachable_time = 10
-#     while "9999" not in b:
-#         timer = time()
-#         elapsed_time = timer - start_time
-#         b = check_output("jupyter-lab list".split()).decode('utf-8')
-#         if "9999" in b:
-#             break
-#         if elapsed_time > unreachable_time:
-#             return HttpResponse("Unreachable")
-#     path = b.split('\n')[1].split('::', 1)[0]
-#     return redirect(path)
 
 def loginPage(request):
     page = 'login'
@@ -55,11 +36,9 @@ def loginPage(request):
     context = {'page': page}
     return render(request, 'core/login_register.html', context)
 
-
 def logoutUser(request):
     logout(request)
     return redirect('home')
-
 
 def registerPage(request):
     form = UserCreationForm()
@@ -75,7 +54,6 @@ def registerPage(request):
         else:
             messages.error(request, 'An error ocurred during registration')
     return render(request, 'core/login_register.html', {'form': form})
-
 
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -96,7 +74,6 @@ def home(request):
         'room_messages': room_messages
         }
     return render(request, 'core/home.html', context)
-
 
 def room(request, pk):
     room = Room.objects.get(id=pk)
@@ -140,7 +117,6 @@ def createRoom(request):
     context = {'form': form}
     return render(request, 'core/room_form.html', context)
 
-
 @login_required(login_url='login')
 def updateRoom(request, pk):
     room = Room.objects.get(id=pk)
@@ -157,7 +133,6 @@ def updateRoom(request, pk):
 
     context = {'form': form}
     return render(request, 'core/room_form.html', context)
-
 
 @login_required(login_url='login')
 def deleteRoom(request, pk):
