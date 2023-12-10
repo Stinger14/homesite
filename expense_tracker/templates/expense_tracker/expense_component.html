@@ -1,3 +1,22 @@
-{% for expense in expenses %}
+<div>
+    <h1>Expenses</h1>
+    <form action="{% url 'add-expense' %}" method="POST">
+        {% csrf_token %}
+        <div>
+            <label for="description">Description</label>
+            <input type="text" name="description" id="description" />
+        </div>
+        <div>
+            <label for="amount">Amount</label>
+            <input type="number" name="amount" id="amount" />
+        </div>
+        <button type="submit">Add Expense</button>
+    </form>
+</div>
+<br>
+<div>
+    {% for expense in expenses %}
     <p>{{ expense.description }}: {{ expense.amount }}</p>
-{% endfor %}
+    {% endfor %}
+</div>
+
