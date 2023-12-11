@@ -1,3 +1,46 @@
-{% for expense in expenses %}
-    <p>{{ expense.description }}: {{ expense.amount }}</p>
-{% endfor %}
+<div class="expenses">
+    <div class="expenses__header">
+        <h2>Recent Expenses</h2>
+    </div>
+    <form action="{% url 'add-expense' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div>
+            <label for="description">Description</label>
+            <input type="text" name="description" id="description" />
+        </div>
+        <div>
+            <label for="amount">Amount</label>
+            <input type="number" name="amount" id="amount" />
+        </div>
+        <button type="submit">Add Expense</button>
+    </form>
+</div>
+<br>
+<div>
+    {% for expense in expenses %}
+
+    <div class="expenseListExpense">
+        <div class="expenseListExpense__header">
+            <a href="{% url 'expenses' %}" class="expenseListExpense__author">
+                <div class="avatar avatar--small">
+                    <img src="https://randomuser.me/api/portraits/women/11.jpg" />
+                </div>
+                <span>@{{expense.user}}</span>
+            </a>
+            <div class="expenseListExpense__actions">
+                <span>{{expense.date|timesince}} ago</span>
+            </div>
+        </div>
+        <div class="expenseListExpense__content">
+            <a href="{% url 'expenses' %}">{{expense.amount}} {{expense.description}}</a>
+        </div>
+        <div class="expenseListExpense__meta">
+            <p class="expenseListExpense__category">{{expense.category}}</p>
+        </div>
+    </div>
+
+    <!-- <p>{{ expense.description }}: {{ expense.amount }}</p> -->
+    {% endfor %}
+</div>
+

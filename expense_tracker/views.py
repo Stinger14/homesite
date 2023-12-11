@@ -1,13 +1,34 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+
+from expense_tracker.forms import ExpenseForm
 from .models import Expense, Category, Budget
 
+@login_required(login_url='login')
 def add_expense(request):
+    form = ExpenseForm()
     if request.method == 'POST':
-        # Add the expense
-        pass
+        form = ExpenseForm(request.POST)
+        if form.is_valid():
+            expense = form.save(commit=False)
+            expense.user = request.user
+            expense.save()
+            return redirect('expenses')
+        context = {'form': form}
+        return render(request, 'expense_tracker/expenses.html', context)
     else:
-        # Display the form
-        pass
+        return render(request, 'expense_tracker/expense_form.html', {'form': form})
+
+def update_expense(request, pk):
+    expense = Expense.objects.get(id=pk)
+    form = ExpenseForm(instance=expense)
+    if request.method == 'POST':
+        form = ExpenseForm(request.POST, instance=expense)
+        if form.is_valid():
+            form.save()
+            return redirect('expenses')
+    context = {'form': form}
+    return render(request, 'expense_tracker/expense_form.html', context)
 
 def add_category(request):
     if request.method == 'POST':

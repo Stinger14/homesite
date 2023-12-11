@@ -6,6 +6,9 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
 
 class Expense(models.Model):
     amount = models.DecimalField(max_digits=8, decimal_places=2)
@@ -13,6 +16,9 @@ class Expense(models.Model):
     date = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.description
 
 
 class Budget(models.Model):
