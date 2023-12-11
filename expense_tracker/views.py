@@ -17,7 +17,7 @@ def add_expense(request):
         context = {'form': form}
         return render(request, 'expense_tracker/expenses.html', context)
     else:
-        pass
+        return render(request, 'expense_tracker/expense_form.html', {'form': form})
 
 def add_category(request):
     if request.method == 'POST':
