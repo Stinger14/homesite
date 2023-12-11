@@ -19,6 +19,17 @@ def add_expense(request):
     else:
         return render(request, 'expense_tracker/expense_form.html', {'form': form})
 
+def update_expense(request, pk):
+    expense = Expense.objects.get(id=pk)
+    form = ExpenseForm(instance=expense)
+    if request.method == 'POST':
+        form = ExpenseForm(request.POST, instance=expense)
+        if form.is_valid():
+            form.save()
+            return redirect('expenses')
+    context = {'form': form}
+    return render(request, 'expense_tracker/expense_form.html', context)
+
 def add_category(request):
     if request.method == 'POST':
         # Add the category
