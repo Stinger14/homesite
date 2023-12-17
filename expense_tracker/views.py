@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from expense_tracker.forms import ExpenseForm
 from .models import Expense, Category, Budget
