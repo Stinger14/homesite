@@ -101,7 +101,7 @@ def userProfile(request, pk):
     context = {
         'user': user, 
         'rooms': rooms, 
-        'room_message': room_messages,
+        'room_messages': room_messages,
         'topics': topics
         }
     return render(request, 'core/profile.html', context)

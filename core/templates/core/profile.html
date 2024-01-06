@@ -16,8 +16,27 @@
             </div>
           </div>
           <div class="profile__info">
-            <h3>{{user.username}}</h3>
-            <p>@{{user.username}}</p>
+            <!-- Profile Card -->
+            <div class="bg-white p-3 border-t-4 border-green-400">
+              
+              <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">Maxly García</h1>
+              <h3 class="text-gray-600 font-lg text-semibold leading-6">Software Developer</h3>
+              <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">I'm a Python/Elixir Developer with a strong focus
+                on building secure, scalable, and maintainable web applications. Proficient with micro-services and Big O</p>
+              <ul
+                  class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
+                  <li class="flex py-3">
+                      <span>Status</span>
+                      <span class="ml-auto"><span
+                              class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                  </li>
+                  <li class="flex py-3">
+                      <span>Member since</span>
+                      <span class="ml-auto">Nov 07, 2016</span>
+                  </li>
+              </ul>
+          </div>
+          <!-- End of profile card -->
             {% if user == request.user %}
             <a href="{% url 'update-user' %}" class="btn btn--main btn--pill">Edit Profile</a>
             {% endif %}
