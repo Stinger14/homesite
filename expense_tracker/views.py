@@ -1,5 +1,8 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from functools import reduce
+from operator import add
 
 from expense_tracker.forms import ExpenseForm
 from .models import Expense, Category, Budget
@@ -48,7 +51,8 @@ def add_budget(request):
 
 def view_expenses(request):
     expenses = Expense.objects.filter(user=request.user)
-    return render(request, 'expense_tracker/expenses.html', {'expenses': expenses})
+    total_expenses = reduce(add, [expense.amount for expense in expenses], 0)
+    return render(request, 'expense_tracker/expenses.html', {'expenses': expenses, 'total_expenses': total_expenses})
 
 def view_categories(request):
     categories = Category.objects.filter(user=request.user)
