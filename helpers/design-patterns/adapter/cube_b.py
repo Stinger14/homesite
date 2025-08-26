@@ -1,0 +1,16 @@
+import time
+from interface_cube_b import ICubeB
+
+
+class CubeB(ICubeB):
+    "A hypothetical Cube tool from company B"
+    
+    # a static variable indicating the last time a cube was manufactured 
+    last_manufactured = int(time.time())
+
+    def create(self, top_left_front, bottom_right_back): 
+        now = int(time.time())
+        if now > int(CubeB.last_manufactured + 2):
+            CubeB.last_manufactured = now
+            return True 
+        return False # busy
